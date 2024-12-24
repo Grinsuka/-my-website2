@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в админ-панель</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        form {
+            display: inline-block;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Вход в админ-панель</h1>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Логин" required>
+        <input type="password" id="password" placeholder="Пароль" required>
+        <button type="submit">Войти</button>
+    </form>
+
+    <script>
+        document.getElementById('loginForm').onsubmit = function(e) {
+            e.preventDefault(); // предотвращает перезагрузку страницы
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Задайте свои учетные данные (замените их на реальные)
+            const validUsername = 'admin'; // Укажите настоящий логин
+            const validPassword = 'password123'; // Укажите настоящий пароль
+
+            if (username === validUsername && password === validPassword) {
+                // Если учетные данные валидны, сохраните статус в localStorage
+                localStorage.setItem('isLoggedIn', 'true');
+                window.location.href = 'admin.html'; // Перенаправление на админ-панель
+            } else {
+                alert('Неверное имя пользователя или пароль');
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали квартиры</title>
+</head>
+
+<body>
+    <h1 id="propertyAddress"></h1>
+    <img id="propertyImage" alt="Изображение квартиры" style="max-width: 100%;">
+    <p id="propertyPrice"></p>
+    <p id="propertyDescription"></p>
+
+    <script>
+        // Получение параметров из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const address = urlParams.get('address');
+        const price = urlParams.get('price');
+        const description = urlParams.get('description');
+        const image = urlParams.get('image');
+
+        // Установка данных на страницу
+        document.getElementById('propertyAddress').innerText = address;
+        document.getElementById('propertyPrice').innerText = `Цена: ${price} ₽`;
+        document.getElementById('propertyDescription').innerText = description;
+        document.getElementById('propertyImage').src = image;
+    </script>
+</body>
+
+</html>

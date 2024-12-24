@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Риелторская Компания</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        nav {
+            margin: 1rem 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .content {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .property {
+            margin: 15px; /* Отступы между объявлениями */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden; /* Обрезаем избыточный контент */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для глубины */
+            transition: transform 0.3s; /* Плавный эффект при наведении */
+            cursor: pointer; /* Указатель при наведении на элементы */
+        }
+
+        .property:hover {
+            transform: scale(1.02); /* Эффект увеличения при наведении */
+        }
+
+        .property img {
+            max-width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .property-info {
+            padding: 15px;
+        }
+
+        .property h3 {
+            margin: 0 0 10px; /* Отступы для заголовка */
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        .property p {
+            margin: 5px 0; /* Отступы для параграфов */
+            color: #555;
+        }
+
+        .property-price {
+            font-weight: bold;
+            color: #4CAF50; /* Цвет для цены */
+            font-size: 1.2em; /* Размер шрифта для цены */
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Сетка для appartements */
+            gap: 20px; /* Отступы между элементами сетки */
+        }
+
+        .property a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .property a:hover {
+            text-decoration: underline;
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none; /* Скрыто по умолчанию */
+            position: fixed; /* Остаётся на месте при прокрутке */
+            z-index: 1000; /* На переднем плане */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Прокрутка, если нужно */
+            background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный фон */
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto; /* Отступ сверху и снизу */
+            padding: 20px;     border: 1px solid #888;
+            width: 80%; /* Ширина модального окна */
+            max-width: 600px; /* Максимальная ширина */
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Тень для модального окна */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Добро пожаловать в нашу риелторскую компанию!</h1>
+        <nav>
+            <a href="#about">О нас</a>
+            <a href="#services">Услуги</a>
+            <a href="#properties">Квартиры</a>
+            <a href="login.html">Вход в админ-панель</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section class="content" id="about">
+            <h2>О нас</h2>
+            <p>Мы - профессиональная риелторская компания, предоставляющая услуги по продаже и аренде недвижимости...</p>
+        </section>
+
+        <section class="content" id="services">
+            <h2>Наши услуги</h2>
+            <ul>
+                <li>Продажа недвижимости</li>
+                <li>Аренда квартир и домов</li>
+                <li>Консультации по недвижимости</li>
+                <li>Оценка недвижимости</li>
+            </ul>
+        </section>
+
+        <section class="content" id="properties">
+            <h2>Наши квартиры</h2>
+            <div id="propertyList" class="properties-grid"></div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Риелторская Компания. Все права защищены.</p>
+    </footer>
+
+    <!-- Модальное окно для отображения полной информации о квартире -->
+    <div id="propertyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <img id="modalImage" src="" alt="Квартира" style="max-width: 100%; height: auto;"> <!-- Изображение квартиры -->
+            <h3 id="modalAddress"></h3>
+            <p class="property-price" id="modalPrice"></p>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+
+    <script>
+        function displayProperties() {
+            const properties = JSON.parse(localStorage.getItem('properties')) || []; // Получаем квартиры из localStorage
+            const propertyList = document.getElementById('propertyList');
+            propertyList.innerHTML = ''; // Очищаем контейнер
+
+            if (properties.length === 0) {
+                propertyList.innerHTML = '<p>Нет доступных квартир.</p>';
+                return;
+            }
+
+            properties.forEach(property => {
+                const propertyDiv = document.createElement('div');
+                propertyDiv.className = 'property';
+                propertyDiv.innerHTML = `
+                    <img src="${property.image}" alt="${property.address}">
+                    <div class="property-info">
+                        <h3>${property.address}</h3>
+                        <p class="property-price">Цена: ${property.price} руб.</p>
+                        <p>${property.description}</p>
+                    </div>
+                `;
+
+                // Добавление обработчика события для открытия модального окна
+                propertyDiv.onclick = function() {
+                    openModal(property);
+                };
+
+                propertyList.appendChild(propertyDiv);
+            });
+        }
+
+        function openModal(property) {
+            document.getElementById('modalImage').src = property.image;   document.getElementById('modalAddress').innerText = property.address;
+            document.getElementById('modalPrice').innerText = `Цена: ${property.price} руб.`;
+            document.getElementById('modalDescription').innerText = property.description;
+            document.getElementById('propertyModal').style.display = 'block'; // Показываем модальное окно
+        }
+
+        // Закрыть модальное окно по клику на крестик
+        document.getElementById('closeModal').onclick = function() {
+            document.getElementById('propertyModal').style.display = 'none';
+        }
+
+        // Закрытие модального окна при клике вне его
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('propertyModal')) {
+                document.getElementById('propertyModal').style.display = 'none';
+            }
+        }
+
+        // Отображаем квартиры при загрузке страницы
+        window.onload = displayProperties;
+    </script>
+</body>
+</html>
